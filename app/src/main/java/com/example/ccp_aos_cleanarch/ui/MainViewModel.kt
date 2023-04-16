@@ -19,10 +19,9 @@ class MainViewModel @Inject constructor(
 
     suspend fun loadCategories() {
         Log.d("로그", "뷰모델 정상 작동 확인")
-        val loadedCategories = repository.getCategories()
+        val loadedCategories: Categories = repository.getCategories()
         loadedCategories?.let {
             _categories.postValue(it)
-            Log.d("로그", it.toString())
         }
     }
 }
