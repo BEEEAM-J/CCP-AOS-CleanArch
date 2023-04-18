@@ -1,20 +1,19 @@
 package com.example.ccp_aos_cleanarch.network
 
 import com.example.ccp_aos_cleanarch.model.Categories
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.ccp_aos_cleanarch.model.Jokes
+import retrofit2.Call
 import retrofit2.http.GET
-import javax.inject.Inject
+import retrofit2.http.Query
 
 interface ApiClient {
 
     @GET("jokes/categories")
     suspend fun getCategories() : Categories
+
+    @GET("jokes/random")
+    suspend fun getJokes(
+        @Query("category") category : String?
+    ): Jokes
 }
 
