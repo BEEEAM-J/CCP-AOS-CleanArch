@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var categoryPos : String? = null
+    private lateinit var cateList :Categories
     private val viewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,16 +35,18 @@ class MainActivity : AppCompatActivity() {
             var adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, it)
             binding.categorySpinner.adapter = adapter
 
+            cateList = it
+            Log.d("로그(액티비티)", cateList.toString())
+
 //          배경 투명도 조절
             binding.mainLayout.setBackgroundColor(Color.parseColor("#5644e6"));
-
 //          ProgressBar 숨기기
             binding.loadingStatus.visibility= View.GONE
-
 //          터치 방지 해제
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
+        // 농담 불러오기 성공
         viewModel.jokes.observe(this) {
             binding.jokeContent.text = it.value
         }
@@ -53,35 +56,33 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        var cateList = arrayListOf<Categories>()
-
 //        카테고리 불러오기
         GlobalScope.launch {
             viewModel.loadCategories()
-            Log.d("카테고리 리스트", cateList.toString())
         }
 
         // 농담 불러오는 버튼 클릭 시
         binding.printBtn.setOnClickListener {
             GlobalScope.launch {
                 Log.d("버튼 클릭", categoryPos.toString())
-//                categoryPos?.let { query ->
-//                    viewModel.loadJokes(query)
-//                }
-                viewModel.loadJokes("animal")
+                categoryPos?.let { query ->
+
+                    // TODO(random 일때는 null을 쿼리로 전송해줘야함 (에러 나는거 해결해야됌))
+                    if (categoryPos == "random") {
+                        viewModel.loadJokes(null)
+                    }
+                    else
+                        viewModel.loadJokes(query)
+                }
             }
         }
 
-        //      스피너의 시작 위치 지정
         binding.categorySpinner.setSelection(0)
-
 //      스피너의 아이템이 클릭 되었을 때 동작
         binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-//                Log.d("로그(카테고리 선택)", cateList[p2].toString())
-                // 선택된 카테고리를 String으로 받아옴
-//                categoryPos = cateList[p2] as String
+//                선택된 카테고리를 String으로 받아옴
+                categoryPos = cateList[p2]
 
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {

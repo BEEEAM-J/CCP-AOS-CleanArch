@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    suspend fun loadJokes(query : String) {
+    suspend fun loadJokes(query : String?) {
         Log.d("로그(뷰모델)", "버튼 정상 작동 확인")
         val loadedJokes: Jokes = repository.getJokes(query)
         loadedJokes?.let {

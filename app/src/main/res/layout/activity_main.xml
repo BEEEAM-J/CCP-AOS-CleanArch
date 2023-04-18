@@ -33,6 +33,7 @@
             android:layout_marginTop="50dp"
             android:maxLines="3"
             android:text="Very Simple Joke App"
+            android:ellipsize="end"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"

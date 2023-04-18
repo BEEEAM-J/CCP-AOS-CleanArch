@@ -7,5 +7,5 @@ interface MainRepository {
 
     suspend fun getCategories(): Categories
 
-    suspend fun  getJokes(query : String): Jokes
+    suspend fun  getJokes(query : String?): Jokes
 }

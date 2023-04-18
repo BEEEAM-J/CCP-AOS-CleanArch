@@ -6,7 +6,6 @@ import com.example.ccp_aos_cleanarch.network.ApiClient
 import retrofit2.Call
 import javax.inject.Inject
 
-//@AndroidEntryPoint
 class MainRepositoryImp @Inject constructor(
     private val apiClient: ApiClient
     ): MainRepository {
@@ -14,7 +13,7 @@ class MainRepositoryImp @Inject constructor(
         return apiClient.getCategories()
     }
 
-    override suspend fun getJokes(query : String): Jokes {
+    override suspend fun getJokes(query : String?): Jokes {
         return apiClient.getJokes(query)
     }
 }
