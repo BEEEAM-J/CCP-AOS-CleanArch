@@ -1,7 +1,9 @@
-package com.example.ccp_aos_cleanarch.data
+package com.example.data
 
-import com.example.ccp_aos_cleanarch.domain.repository.MainRepository
-import com.example.ccp_aos_cleanarch.data.network.ApiClient
+import com.example.data.network.ApiClient
+import com.example.domain.model.Categories
+import com.example.domain.model.Jokes
+import com.example.domain.repository.MainRepository
 import javax.inject.Inject
 
 class MainRepositoryImp @Inject constructor(

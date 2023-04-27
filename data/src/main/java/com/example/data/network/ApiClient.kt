@@ -1,7 +1,7 @@
-package com.example.ccp_aos_cleanarch.data.network
+package com.example.data.network
 
-import com.example.ccp_aos_cleanarch.data.Categories
-import com.example.ccp_aos_cleanarch.data.Jokes
+import com.example.domain.model.Categories
+import com.example.domain.model.Jokes
 import retrofit2.http.GET
 import retrofit2.http.Query
 

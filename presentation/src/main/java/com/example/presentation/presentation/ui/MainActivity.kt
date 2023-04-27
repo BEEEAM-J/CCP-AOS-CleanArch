@@ -1,4 +1,4 @@
-package com.example.ccp_aos_cleanarch.presentation.ui
+package com.example.presentation.presentation.ui
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +10,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import com.example.ccp_aos_cleanarch.R
-import com.example.ccp_aos_cleanarch.databinding.ActivityMainBinding
-import com.example.ccp_aos_cleanarch.data.Categories
+import com.example.domain.model.Categories
+import com.example.presentation.R
+import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("버튼 클릭", categoryPos.toString())
                 categoryPos?.let { query ->
 
-                    // TODO(random 일때는 null을 쿼리로 전송해줘야함 (에러 나는거 해결해야됌))
+
                     if (categoryPos == "random") {
                         viewModel.loadJokes(null)
                     }

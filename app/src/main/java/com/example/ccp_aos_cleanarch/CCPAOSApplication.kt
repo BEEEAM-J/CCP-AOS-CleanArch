@@ -1,4 +1,4 @@
-package com.example.ccp_aos_cleanarch.presentation
+package com.example.ccp_aos_cleanarch
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

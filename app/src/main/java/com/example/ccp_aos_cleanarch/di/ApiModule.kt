@@ -1,5 +1,6 @@
-package com.example.ccp_aos_cleanarch.data.network
+package com.example.ccp_aos_cleanarch.di
 
+import com.example.data.network.ApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

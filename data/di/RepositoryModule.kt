@@ -1,7 +1,7 @@
-package com.example.ccp_aos_cleanarch.presentation.di
+package com.example.ccp_aos_cleanarch.di
 
-import com.example.ccp_aos_cleanarch.domain.repository.MainRepository
-import com.example.ccp_aos_cleanarch.data.MainRepositoryImp
+import com.example.data.MainRepositoryImp
+import com.example.domain.repository.MainRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

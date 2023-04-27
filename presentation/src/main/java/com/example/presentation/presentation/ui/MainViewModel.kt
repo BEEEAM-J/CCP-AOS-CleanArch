@@ -1,12 +1,12 @@
-package com.example.ccp_aos_cleanarch.presentation.ui
+package com.example.presentation.presentation.ui
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.ccp_aos_cleanarch.data.Categories
-import com.example.ccp_aos_cleanarch.data.Jokes
-import com.example.ccp_aos_cleanarch.domain.repository.MainRepository
+import com.example.domain.model.Categories
+import com.example.domain.model.Jokes
+import com.example.domain.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

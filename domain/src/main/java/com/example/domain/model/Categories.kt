@@ -1,3 +1,3 @@
-package com.example.ccp_aos_cleanarch.data
+package com.example.domain.model
 
 class Categories : ArrayList<String>(arrayListOf("random"))

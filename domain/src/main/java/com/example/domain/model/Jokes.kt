@@ -1,4 +1,4 @@
-package com.example.ccp_aos_cleanarch.data
+package com.example.domain.model
 
 data class Jokes(
     val icon_url: String,
