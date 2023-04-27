@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CCP-AOS-CleanArch"
 include ':app'
+include ':presentation'
+include ':data'
+include ':domain'

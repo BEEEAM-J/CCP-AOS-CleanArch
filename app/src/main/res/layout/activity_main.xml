@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.ccp_aos_cleanarch.ui.MainViewModel" />
+            type="com.example.ccp_aos_cleanarch.presentation.ui.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#805644e6"
-        tools:context=".ui.MainActivity">
+        tools:context=".presentation.ui.MainActivity">
 
         <ImageView
             android:id="@+id/title_image"
