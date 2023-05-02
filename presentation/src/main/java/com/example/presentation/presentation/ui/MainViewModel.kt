@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
 
     suspend fun loadCategories() {
         Log.d("로그(뷰모델)", "뷰모델 정상 작동 확인")
-        val loadedCategories: Categories = repository.getCategories()
+        val loadedCategories: Categories = repository.loadCategories()
         loadedCategories?.let {
             _categories.postValue(it)
             Log.d("로그(뷰모델)", it.toString())
@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
 
     suspend fun loadJokes(query : String?) {
         Log.d("로그(뷰모델)", "버튼 정상 작동 확인")
-        val loadedJokes: Jokes = repository.getJokes(query)
+        val loadedJokes: Jokes = repository.loadJokes(query)
         loadedJokes?.let {
             _jokes.postValue(it)
             Log.d("로그(뷰모델)", it.toString())

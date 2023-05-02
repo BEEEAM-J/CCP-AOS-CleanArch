@@ -5,7 +5,7 @@ import com.example.domain.model.Jokes
 
 interface MainRepository {
 
-    suspend fun getCategories(): Categories
+    suspend fun loadCategories(): Categories
 
-    suspend fun  getJokes(query : String?): Jokes
+    suspend fun  loadJokes(query : String?): Jokes
 }

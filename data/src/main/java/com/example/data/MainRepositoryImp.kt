@@ -9,11 +9,11 @@ import javax.inject.Inject
 class MainRepositoryImp @Inject constructor(
     private val apiClient: ApiClient
     ): MainRepository {
-    override suspend fun getCategories(): Categories {
+    override suspend fun loadCategories(): Categories {
         return apiClient.getCategories()
     }
 
-    override suspend fun getJokes(query : String?): Jokes {
+    override suspend fun loadJokes(query : String?): Jokes {
         return apiClient.getJokes(query)
     }
 }
