@@ -6,13 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.model.Categories
 import com.example.domain.model.Jokes
-import com.example.domain.repository.MainRepository
+import com.example.domain.usecase.GetCategoriesUseCase
+import com.example.domain.usecase.GetJokesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val CategoriesUsecase: GetCategoriesUseCase,
+    private val JokesUsecase: GetJokesUseCase
 ): ViewModel() {
 
     private val _categories = MutableLiveData<Categories>()
@@ -24,7 +26,7 @@ class MainViewModel @Inject constructor(
 
     suspend fun loadCategories() {
         Log.d("로그(뷰모델)", "뷰모델 정상 작동 확인")
-        val loadedCategories: Categories = repository.loadCategories()
+        val loadedCategories: Categories = CategoriesUsecase.loadCategories()
         loadedCategories?.let {
             _categories.postValue(it)
             Log.d("로그(뷰모델)", it.toString())
@@ -33,7 +35,7 @@ class MainViewModel @Inject constructor(
 
     suspend fun loadJokes(query : String?) {
         Log.d("로그(뷰모델)", "버튼 정상 작동 확인")
-        val loadedJokes: Jokes = repository.loadJokes(query)
+        val loadedJokes: Jokes = JokesUsecase.loadJokes(query)
         loadedJokes?.let {
             _jokes.postValue(it)
             Log.d("로그(뷰모델)", it.toString())

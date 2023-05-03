@@ -7,5 +7,5 @@ interface MainRepository {
 
     suspend fun loadCategories(): Categories
 
-    suspend fun  loadJokes(query : String?): Jokes
+    suspend fun loadJokes(query : String?): Jokes
 }
