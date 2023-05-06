@@ -2,6 +2,7 @@ package com.example.data.network
 
 import com.example.domain.model.Categories
 import com.example.domain.model.Jokes
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Query
 

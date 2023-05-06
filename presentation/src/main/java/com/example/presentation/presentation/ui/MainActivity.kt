@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.asLiveData
 import com.example.domain.model.Categories
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityMainBinding
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // 카테고리 데이터 받아오기 성공
-        viewModel.categories.observe(this) {
+        viewModel.categories.asLiveData().observe(this) {
             var adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, it)
             binding.categorySpinner.adapter = adapter
 
@@ -46,10 +47,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 농담 불러오기 성공
-        viewModel.jokes.observe(this) {
+        viewModel.jokes.asLiveData().observe(this) {
             binding.jokeContent.text = it.value
         }
 
+//        viewModel.jokes.observe(this) {
+//            binding.jokeContent.text = it.value
+//        }
     }
 
     override fun onResume() {
