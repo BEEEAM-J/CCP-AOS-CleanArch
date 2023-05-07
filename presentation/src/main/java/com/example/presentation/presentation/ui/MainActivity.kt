@@ -51,9 +51,6 @@ class MainActivity : AppCompatActivity() {
             binding.jokeContent.text = it.value
         }
 
-//        viewModel.jokes.observe(this) {
-//            binding.jokeContent.text = it.value
-//        }
     }
 
     override fun onResume() {

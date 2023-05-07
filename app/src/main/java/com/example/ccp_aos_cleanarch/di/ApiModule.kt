@@ -1,6 +1,7 @@
 package com.example.ccp_aos_cleanarch.di
 
 import com.example.data.network.ApiClient
+import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +33,7 @@ object ApiModule {
 
         return Retrofit.Builder()
             .baseUrl(BASEURL)
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
