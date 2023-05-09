@@ -1,4 +1,4 @@
-package com.example.presentation.presentation.ui
+package com.example.presentation.ui
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
 import com.example.domain.model.Categories
+import com.example.presentation.MainState
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,25 +31,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        // 카테고리 데이터 받아오기 성공
-        viewModel.categories.asLiveData().observe(this) {
-            var adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, it)
-            binding.categorySpinner.adapter = adapter
+        // UiState 관찰
+        viewModel.uiState.asLiveData().observe(this) {
+            when(it) {
+                is MainState.Loading -> {
 
-            cateList = it
-            Log.d("로그(액티비티)", cateList.toString())
+                }
+                // 카테고리 로딩 완료
+                is MainState.CategoryLoaded -> {
+                    var adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, viewModel.categories.value)
+                    binding.categorySpinner.adapter = adapter
 
-//          배경 투명도 조절
-            binding.mainLayout.setBackgroundColor(Color.parseColor("#5644e6"));
-//          ProgressBar 숨기기
-            binding.loadingStatus.visibility= View.GONE
-//          터치 방지 해제
-            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        }
+                    cateList = viewModel.categories.value
+                    Log.d("로그(액티비티)", cateList.toString())
 
-        // 농담 불러오기 성공
-        viewModel.jokes.asLiveData().observe(this) {
-            binding.jokeContent.text = it.value
+                    // 배경 투명도 조절
+                    binding.mainLayout.setBackgroundColor(Color.parseColor("#5644e6"));
+                    // ProgressBar 숨기기
+                    binding.loadingStatus.visibility= View.GONE
+                    // 터치 방지 해제
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                }
+                // 농담 로딩 완료
+                is MainState.JokeLoaded -> {
+                    binding.jokeContent.text = viewModel.jokes.value.value
+                }
+            }
         }
 
     }
@@ -56,18 +64,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-//        카테고리 불러오기
-        GlobalScope.launch {
-            viewModel.loadCategories()
-        }
-
         // 농담 불러오는 버튼 클릭 시
         binding.printBtn.setOnClickListener {
             GlobalScope.launch {
                 Log.d("버튼 클릭", categoryPos.toString())
                 categoryPos?.let { query ->
-
-
                     if (categoryPos == "random") {
                         viewModel.loadJokes(null)
                     }
@@ -91,5 +92,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
     }
+
 }
