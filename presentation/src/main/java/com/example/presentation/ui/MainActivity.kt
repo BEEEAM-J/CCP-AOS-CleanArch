@@ -1,14 +1,20 @@
 package com.example.presentation.ui
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AnticipateInterpolator
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
 import com.example.domain.model.Categories
@@ -25,10 +31,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var categoryPos : String? = null
     private lateinit var cateList : Categories
+
     private val viewModel : MainViewModel by viewModels()
+
+    // 스플래시 화면
+    private lateinit var splashScreen: SplashScreen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 스플래시 화면은 setContentView 전에 install 해야함
+        splashScreen = installSplashScreen()
+        startSplash()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // UiState 관찰
@@ -54,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 // 농담 로딩 완료
                 is MainState.JokeLoaded -> {
-                    binding.jokeContent.text = viewModel.jokes.value.value
+                    binding.jokes = viewModel.jokes.value
                 }
             }
         }
@@ -91,8 +105,22 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
 
+    private fun startSplash() {
+        splashScreen.setOnExitAnimationListener { splashScreenView ->
+            val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f, 0.7f)
+            val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f, 0.7f)
 
+            ObjectAnimator.ofPropertyValuesHolder(splashScreenView.iconView, scaleX, scaleY).run {
+                interpolator = AnticipateInterpolator()
+                duration = 5000L
+                doOnEnd {
+                    splashScreenView.remove()
+                }
+                start()
+            }
+        }
     }
 
 }

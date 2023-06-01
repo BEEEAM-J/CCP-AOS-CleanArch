@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.example.presentation.ui.MainViewModel" />
+            name="jokes"
+            type="com.example.domain.model.Jokes" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:maxLines="3"
-            android:text="Very Simple Joke App"
+            android:text="@{jokes.value}"
             android:ellipsize="end"
             android:textColor="@color/white"
             android:textSize="22sp"

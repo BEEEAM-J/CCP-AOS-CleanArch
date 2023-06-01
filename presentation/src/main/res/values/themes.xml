@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CCPAOSCleanArch" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.CCPAOSCleanArch" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,5 +13,13 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#5644e6</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/undraw_happy_music_g6wc</item>
+<!--        <item name="windowSplashScreenBackground">@color/white</item>-->
+<!--        <item name="windowSplashScreenAnimatedIcon">@drawable/catsplash</item>-->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.CCPAOSCleanArch</item>
     </style>
 </resources>
