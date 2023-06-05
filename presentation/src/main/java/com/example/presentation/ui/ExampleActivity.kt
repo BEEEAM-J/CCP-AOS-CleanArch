@@ -22,23 +22,44 @@ import com.example.domain.model.Categories
 import com.example.presentation.MainState
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityMainBinding
-import com.example.presentation.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
-    R.layout.activity_main
-) {
+class ExampleActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     private var categoryPos : String? = null
     private lateinit var cateList : Categories
 
-    override val viewModel : MainViewModel by viewModels()
+    private val viewModel : MainViewModel by viewModels()
 
     // 스플래시 화면
     private lateinit var splashScreen: SplashScreen
 
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.loadCategories()
+
+        // 스플래시 화면은 setContentView 전에 install 해야함
+        splashScreen = installSplashScreen()
+        startSplash()
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        binding.root.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (viewModel.isReady) {
+                        binding.root.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }
+        )
+
         // UiState 관찰
         viewModel.uiState.asLiveData().observe(this) {
             when(it) {
@@ -47,7 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
                 }
                 // 카테고리 로딩 완료
                 is MainState.CategoryLoaded -> {
-                    var adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, viewModel.categories.value)
+                    var adapter = ArrayAdapter(this@ExampleActivity, android.R.layout.simple_list_item_1, viewModel.categories.value)
                     binding.categorySpinner.adapter = adapter
 
                     cateList = viewModel.categories.value
@@ -66,29 +87,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
                 }
             }
         }
-    }
 
-    override fun preload() {
-        viewModel.loadCategories()
-
-        // 스플래시 화면은 setContentView 전에 install 해야함
-        splashScreen = installSplashScreen()
-        startSplash()
-    }
-
-    override fun delaySplash() {
-        binding.root.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (viewModel.isReady) {
-                        binding.root.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        false
-                    }
-                }
-            }
-        )
     }
 
     override fun onResume() {
@@ -107,16 +106,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         }
 
         binding.categorySpinner.setSelection(0)
-        // 스피너의 아이템이 클릭 되었을 때 동작
+//      스피너의 아이템이 클릭 되었을 때 동작
         binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                // 선택된 카테고리를 String으로 받아옴
+//                선택된 카테고리를 String으로 받아옴
                 categoryPos = cateList[p2]
 
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
+
         }
     }
 

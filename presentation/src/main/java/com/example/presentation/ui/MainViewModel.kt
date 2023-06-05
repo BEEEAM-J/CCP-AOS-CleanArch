@@ -31,6 +31,8 @@ class MainViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<MainState>(MainState.Loading)
     val uiState = _uiState.asStateFlow()
 
+    var isReady: Boolean = false
+
 //    lateinit var loadedCategories: Categories
 
 //    private val _categories = MutableLiveData<Categories>()
@@ -51,6 +53,7 @@ class MainViewModel @Inject constructor(
             loadedCategories?.let {
                 _categories.value = it
                 Log.d("로그(뷰모델)", it.toString())
+                isReady = true
                 _uiState.value = MainState.CategoryLoaded(loadedCategories)
             }
         }
