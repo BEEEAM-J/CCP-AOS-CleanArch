@@ -39,38 +39,31 @@ class MainViewModel @Inject constructor(
 //    private val _jokes = MutableLiveData<Jokes>()
 //    val jokes: LiveData<Jokes> = _jokes
 
-    init {
-        GlobalScope.launch {
-            loadCategories()
-        }
-    }
-
-    // uiState 값 조정할 메서드
-//    fun abc() {
-//        if (loadedCategories.size == 1) {
-//            _uiState.value = MainState.Loading
-//        }
-//        else if (loadedCategories.size > 1) {
-//            _uiState.value = MainState.CategoryLoaded(loadedCategories)
+//    init {
+//        GlobalScope.launch {
+//            loadCategories()
 //        }
 //    }
 
-    private suspend fun loadCategories() = viewModelScope.launch {
-        val loadedCategories = CategoriesUseCase.loadCategories()
-        loadedCategories?.let {
-            _categories.value = it
-            Log.d("로그(뷰모델)", it.toString())
-            _uiState.value = MainState.CategoryLoaded(loadedCategories)
+    fun loadCategories() {
+        viewModelScope.launch {
+            val loadedCategories = CategoriesUseCase.loadCategories()
+            loadedCategories?.let {
+                _categories.value = it
+                Log.d("로그(뷰모델)", it.toString())
+                _uiState.value = MainState.CategoryLoaded(loadedCategories)
+            }
         }
-
     }
 
-    suspend fun loadJokes(query : String?) = viewModelScope.launch{
-        val loadedJokes = JokesUseCase.loadJokes(query)
-        loadedJokes?.let {
-            _jokes.value = it
-            Log.d("로그(뷰모델)", it.toString())
-            _uiState.value = MainState.JokeLoaded(loadedJokes)
+    fun loadJokes(query : String?) {
+        viewModelScope.launch {
+            val loadedJokes = JokesUseCase.loadJokes(query)
+            loadedJokes?.let {
+                _jokes.value = it
+                Log.d("로그(뷰모델)", it.toString())
+                _uiState.value = MainState.JokeLoaded(loadedJokes)
+            }
         }
     }
 

@@ -22,8 +22,6 @@ import com.example.presentation.MainState
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -39,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.loadCategories()
 
         // 스플래시 화면은 setContentView 전에 install 해야함
         splashScreen = installSplashScreen()
@@ -80,15 +80,13 @@ class MainActivity : AppCompatActivity() {
 
         // 농담 불러오는 버튼 클릭 시
         binding.printBtn.setOnClickListener {
-            GlobalScope.launch {
-                Log.d("버튼 클릭", categoryPos.toString())
-                categoryPos?.let { query ->
-                    if (categoryPos == "random") {
-                        viewModel.loadJokes(null)
-                    }
-                    else
-                        viewModel.loadJokes(query)
+            Log.d("버튼 클릭", categoryPos.toString())
+            categoryPos?.let { query ->
+                if (categoryPos == "random") {
+                    viewModel.loadJokes(null)
                 }
+                else
+                    viewModel.loadJokes(query)
             }
         }
 
