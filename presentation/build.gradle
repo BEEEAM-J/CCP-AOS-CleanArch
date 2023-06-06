@@ -72,6 +72,9 @@ dependencies {
     // SplashScreen Api (Android12 뿐만 아니라 그 이하의 버전에서도 동일한 Splash 적용)
     implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
 
+    // Timber
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
     // Multi Module
     implementation(project(":domain"))
 }
